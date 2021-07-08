@@ -1,16 +1,31 @@
 package com.example.demo.controller;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
 public class MainController {
 
-	@GetMapping
-	public String main() {
-		return "index";
+	@GetMapping( {"/home","/"})
+	public String main(Authentication authentication) {
+		
+		
+//        return principal.getName();
+		
+		System.out.println("---->"+ authentication.getName());
+		if(authentication.getName().equalsIgnoreCase("user")) {
+			
+			return "index";
+		}else {
+			return "cskh";
+		}
+		
+		
 	}
 
 	@GetMapping("/manage-order")
@@ -26,4 +41,9 @@ public class MainController {
 	}
 	
 	
+	@GetMapping("/cskh/dashboard")
+	public String cskh() {
+		
+		return "cskh";
+	}
 }
